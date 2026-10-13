@@ -1,0 +1,12 @@
+# macOS
+.DS_Store
+**/.DS_Store
+
+# Project internal / assistant data
+.codebuddy/
+.claude/
+
+# Secrets
+*.pem
+*.key
+.env

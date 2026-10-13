@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>本咪的工作爪印</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container container-wrapper">
+    <header class="app-header">
+      <nav class="floating-nav-bar">
+        <div class="tab-nav">
+          <button class="tab-nav-btn active" id="nav-archive">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="6" cy="11.5" r="2"/><circle cx="10" cy="6.5" r="2"/><circle cx="14" cy="6.5" r="2"/><circle cx="18" cy="11.5" r="2"/><path d="M12 10.5c-3.5 0-5 2.5-5 5 0 2.5 2 3.5 5 4s5-1.5 5-4c0-2.5-1.5-5-5-5.5z"/>
+            </svg>
+            <span class="nav-text">爪印</span>
+          </button>
+          <button class="tab-nav-btn" id="nav-tasks">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 11V9a4 4 0 0 0-4-4h-2a4 4 0 0 0-4 4v2H8"/><circle cx="5" cy="11" r="3"/><path d="M3.5 8.5L2 5.5l2.5 2M6.5 8.5L8 5.5l-2.5 2M18 9c2-2 3-5 1-7M8 11v8M11 11v5l-1.5 3M15 11v5l1.5 3M18 11v8"/>
+            </svg>
+            <span class="nav-text">任务</span>
+          </button>
+        </div>
+      </nav>
+      <button id="trail-overview-btn" class="trail-overview-btn" type="button" aria-label="轨迹概览" title="轨迹概览">
+        <img src="icons/zhenlie.png" alt="" />
+      </button>
+      <div class="header-subtitle" id="shortcut-subtitle">⌥ 1 存档全部页面　·　⌥ 2 存档当前页面</div>
+      <button id="toggle-settings" class="settings-icon-btn" title="模型设置">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"></path><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a1.65 1.65 0 0 0 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1Z"></path></svg>
+      </button>
+      <button id="back-to-tasks" class="back-to-tasks-float hidden" title="返回任务列表">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+    </header>
+
+    <!-- 设置浮层 (全屏或页面级) -->
+    <div id="settings-view" class="settings-view hidden">
+      <div class="settings-view-header">
+        <button id="close-settings" class="back-btn btn-secondary" style="margin-bottom: 0;">&larr; 返回并保存</button>
+        <h2>小咪的工作爪印</h2>
+      </div>
+      <div class="task-remove-warning settings-top-warning">
+        移除插件将删除本地所有保存内容，请在移除前确认是否需要备份。
+      </div>
+      <div class="settings-body card">
+        <label class="settings-checkbox">
+          <input id="enable-ai" type="checkbox" />
+          启用 AI 摘要功能
+        </label>
+
+        <label class="settings-label" for="api-key">API Key</label>
+        <input id="api-key" class="settings-input" type="password" placeholder="sk-..." autocomplete="off" />
+        <div class="settings-hint settings-hint--field">
+          请填入 OpenAI 兼容接口的 Key（DeepSeek、OpenAI、Moonshot、智谱等均可；Claude、Gemini 原生接口暂不支持）。
+        </div>
+
+        <label class="settings-label" for="model-name">大语言模型名称</label>
+        <input id="model-name" class="settings-input" type="text" placeholder="deepseek-chat / gpt-4o-mini / qwen-plus" autocomplete="off" />
+
+        <label class="settings-label" for="api-endpoint">接口地址</label>
+        <input id="api-endpoint" class="settings-input" type="text" placeholder="https://api.deepseek.com/chat/completions" autocomplete="off" />
+
+        <label class="settings-checkbox">
+          <input id="include-screenshot" type="checkbox" />
+          将截图一并发送给模型
+        </label>
+        <div class="settings-hint">
+          截图以图像形式发送，请确认上面填写的模型同时支持文本和图像输入；若模型不支持图像，开启此项可能报错，建议关闭。
+        </div>
+
+        <label class="settings-label">发送给 AI 的网页文本量（字数）</label>
+        <div class="settings-text-lengths">
+          <div class="settings-text-length-item">
+            <span>顶部</span>
+            <input id="text-length-beginning" class="settings-input settings-input--short" type="number" min="0" max="2000" step="50" />
+          </div>
+          <div class="settings-text-length-item">
+            <span>当前位置</span>
+            <input id="text-length-viewport" class="settings-input settings-input--short" type="number" min="0" max="2000" step="50" />
+          </div>
+          <div class="settings-text-length-item">
+            <span>底部</span>
+            <input id="text-length-ending" class="settings-input settings-input--short" type="number" min="0" max="2000" step="50" />
+          </div>
+        </div>
+
+        <div class="token-usage-display">
+          <div class="token-usage-title">最近一次消耗</div>
+          <div id="token-usage-text" class="token-usage-text">未知</div>
+        </div>
+
+        <!-- 数据备份与恢复 -->
+        <div class="settings-section">
+          <div class="settings-section-title">数据备份与恢复</div>
+          <div class="settings-hint settings-hint--field">
+            插件数据保存在浏览器本地，卸载插件会被清除。请及时导出备份文件留存；重装后可通过导入完整还原。
+          </div>
+          <label class="settings-checkbox">
+            <input id="backup-include-screenshot" type="checkbox" checked />
+            备份包含截图
+          </label>
+          <div class="settings-hint">
+            截图是备份体积的主要来源；取消勾选可显著减小文件，但导入后卡片不再显示截图。
+          </div>
+          <div class="backup-actions">
+            <button id="export-json-btn" class="btn-secondary">导出 JSON 备份</button>
+            <button id="export-md-btn" class="btn-secondary">导出 Markdown 归档</button>
+            <button id="import-backup-btn" class="btn-secondary">从备 JAON备份 导入</button>
+          </div>
+          <input id="import-file-input" class="hidden" type="file" accept=".json,application/json" />
+          <div id="backup-status" class="backup-status"></div>
+        </div>
+
+        <span id="settings-status" class="settings-status"></span>
+      </div>
+    </div>
+
+    <!-- 最近存档页面 -->
+    <div id="page-archive" class="page-content">
+      <div id="cards-container"></div>
+      <div id="empty-state" class="empty-state card">
+        <div class="empty-icon">📂</div>
+        <p>还没有保存的工作</p>
+        <p class="hint" id="shortcut-hint">按 Option+1 保存工作</p>
+      </div>
+    </div>
+
+    <!-- 任务列表页面 -->
+    <div id="page-tasks" class="page-content hidden">
+      <div id="task-list-view">
+        <div class="task-list-toolbar">
+          <button id="task-create-btn" class="task-create-btn btn-primary">+ 新建任务</button>
+          <div class="task-search-wrap">
+            <svg class="task-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="7"/><path d="M20.5 20.5l-4-4"/>
+            </svg>
+            <input id="task-search-input" class="task-search-input" type="text" placeholder="任务标题、摘要、卡片内容…" autocomplete="off" />
+            <button id="task-search-clear" class="task-search-clear hidden" type="button" title="清除">&times;</button>
+          </div>
+          <button id="task-sort-btn" class="task-sort-btn" title="切换排序方向">
+            <img id="task-sort-icon" src="icons/Time down.png" alt="排序" />
+          </button>
+        </div>
+        <!-- 已归档任务折叠块 -->
+        <div id="archived-tasks-panel" class="archived-tasks-panel hidden">
+          <div class="archived-tasks-toggle" id="archived-tasks-toggle">
+            <span class="archived-tasks-toggle-label">已归档任务</span>
+            <span class="archived-tasks-toggle-arrow">▶</span>
+          </div>
+          <div id="archived-tasks-body" class="archived-tasks-body hidden"></div>
+        </div>
+        <div id="tasks-container" class="tasks-container"></div>
+        <div id="tasks-empty" class="empty-state card">
+          <div class="empty-icon">📋</div>
+          <p>暂无任务</p>
+          <p class="hint">存档后 AI 会自动归类任务</p>
+        </div>
+      </div>
+      <!-- 任务详情视图 -->
+      <div id="task-detail-view" class="hidden">
+        <div id="task-detail-header" class="task-detail-header card">
+          <!-- 任务简报折叠面板（渲染时由 JS 重新挂载到卡片内） -->
+          <div id="task-briefing-panel" class="task-briefing-panel">
+            <div class="task-briefing-toggle" id="task-briefing-toggle">
+              <span class="task-briefing-toggle-label">任务简报</span>
+              <span class="task-briefing-toggle-arrow">▶</span>
+            </div>
+            <div id="task-briefing-body" class="task-briefing-body hidden">
+              <div id="task-briefing-meta" class="task-briefing-meta"></div>
+              <div id="task-briefing-content" class="task-briefing-content"></div>
+              <button id="task-briefing-update-btn" class="task-briefing-update-btn btn-primary">更新简报</button>
+            </div>
+          </div>
+          <!-- 任务待办折叠面板 -->
+          <div id="task-todo-panel" class="task-todo-panel">
+            <div class="task-todo-toggle" id="task-todo-toggle">
+              <span class="task-todo-toggle-label">待办</span>
+              <span class="task-todo-toggle-arrow">▶</span>
+            </div>
+            <div id="task-todo-body" class="task-todo-body hidden">
+              <div id="task-todo-list" class="task-todo-list"></div>
+              <div class="task-todo-add">
+                <span class="task-todo-add-icon">+</span>
+                <input type="text" id="task-todo-input" class="task-todo-input" placeholder="输入待办事项，按回车添加..." />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="task-detail-cards"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 截图悬停放大预览 -->
+  <div id="screenshot-preview" class="screenshot-preview hidden">
+    <img src="" alt="截图预览" />
+  </div>
+
+  <!-- 自定义弹窗 UI -->
+  <div id="custom-modal-overlay" class="custom-modal-overlay hidden">
+    <div class="custom-modal">
+      <div class="custom-modal-header">
+        <h3 id="custom-modal-title">标题</h3>
+      </div>
+      <div class="custom-modal-body">
+        <p id="custom-modal-message">消息内容</p>
+        <div id="custom-modal-input-wrapper" style="display: none; align-items: center; margin-top: 12px; gap: 8px;">
+          <div id="custom-modal-icon" class="task-icon-selector hidden"><img src="" alt=""/></div>
+          <input type="text" id="custom-modal-input" class="settings-input hidden" style="margin-top: 0; flex: 1;" autocomplete="off" />
+        </div>
+      </div>
+      <div class="custom-modal-footer">
+        <button id="custom-modal-cancel" class="btn-secondary">取消</button>
+        <button id="custom-modal-confirm" class="btn-primary">确定</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+{
+  "manifest_version": 3,
+  "name": "小咪的工作爪印",
+  "version": "1.0.0",
+  "description": "按任务分类存档浏览器工作片段，支持 AI 智能概要、轨迹时间线与折叠回顾。",
+  "permissions": [
+    "tabs",
+    "storage",
+    "activeTab",
+    "scripting",
+    "unlimitedStorage",
+    "downloads"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "16": "icons/logo16.png",
+    "32": "icons/logo32.png",
+    "48": "icons/logo48.png",
+    "128": "icons/logo128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "小咪的工作爪印",
+    "default_icon": {
+      "16": "icons/logo16.png",
+      "32": "icons/logo32.png",
+      "48": "icons/logo48.png",
+      "128": "icons/logo128.png"
+    }
+  },
+  "commands": {
+    "save-work": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+1",
+        "mac": "Alt+1"
+      },
+      "description": "保存当前整个窗口的工作状态"
+    },
+    "snapshot-active-tab": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+2",
+        "mac": "Alt+2"
+      },
+      "description": "存档当前活动标签页"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/saved/*", "icons/labels/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

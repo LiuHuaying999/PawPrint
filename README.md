@@ -53,14 +53,20 @@
 
 ## 安装
 
-1. 打开 Chrome，进入 `chrome://extensions/`；
-2. 右上角开启「开发者模式」；
-3. 点击「加载已解压的扩展程序」，选择本项目根目录；
-4. 扩展图标出现在工具栏后即可使用。
+1. **下载项目**：在本仓库页面点击 `Code → Download ZIP` 下载并解压，或克隆到本地：
+   ```bash
+   git clone https://github.com/LiuHuaying999/PawPrint.git
+   ```
+2. 打开 Chrome，进入 `chrome://extensions/`；
+3. 右上角开启「开发者模式」（Developer mode）；
+4. 点击「加载已解压的扩展程序」（Load unpacked），选择**解压后的项目根目录**（即包含 `manifest.json` 的文件夹）；
+5. 扩展图标出现在工具栏后，即可开始使用。
 
-> 如需更新，在 `chrome://extensions/` 找到本扩展，点击刷新图标即可。
+> 如需更新：拉取最新代码后，在 `chrome://extensions/` 找到本扩展，点击刷新图标即可。
 
 ## 使用
+
+安装完成后，即可按以下步骤开始使用：
 
 1. 先到扩展设置里填入你自己的 API Key 并开启 AI（点击工具栏图标 → 设置）；不配置也能用基础存档与回顾，只是没有 AI 概要；
 2. 工作到某个节点，按下 `Alt + 1`（Mac）存下当前整个窗口；
